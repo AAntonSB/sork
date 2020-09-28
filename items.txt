@@ -1,0 +1,2 @@
+{name: "rusty sword", type: "weapon", damage: 15, durability: 35, defence: 0}
+{name: "old boots", type: "armor", damage: 0, durability: 35, defence: 3}
