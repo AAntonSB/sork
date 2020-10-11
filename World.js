@@ -32,7 +32,16 @@ module.exports = class World {
     console.log(item.description);
   }
 
-  }
+  takeItem(value) {
+    const item = this.findItem(value);
+    if (!item) return console.log("that item can't be found in this room");
+    const trigger = item.triggers.find((e) => e.action === "take");
+    if (trigger) {
+      this.player.addToInventory(item);
+      console.log(trigger.description);
+      const effect = trigger.effect;
+      if (effect) this.player.addEffect(effect);
+    }
   }
 
   equipItem(value) {
