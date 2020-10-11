@@ -46,6 +46,10 @@ module.exports = class CombatManager {
         }
         break;
       case "2":
+        this.chooseEnemyActOption(
+          enemy,
+          await this.engine.prompt(this.getEnemyActOptions(enemy))
+        );
         break;
       case "3":
         console.log(enemy.details);
@@ -61,6 +65,33 @@ module.exports = class CombatManager {
     }
     await this.engine.prompt("");
     console.clear();
+  }
+
+  //Displays and acts upon player inputs
+  chooseEnemyActOption(enemy, choice) {
+    const choiceZeroIndexed = choice.value - 1;
+
+    const actOptionCount = this.actOptionCount[choiceZeroIndexed];
+    const actOption = enemy.actOptions[choiceZeroIndexed].stages;
+
+    console.log(actOption[actOptionCount]);
+
+    this.setActOptionCount(choiceZeroIndexed, actOptionCount + 1);
+    if (actOptionCount === actOption.length - 1) {
+      //These are the different reactions too a finished act sequence
+      //TODO Create a factory out of this to react to the different options for easier expantion (or maby a dictoinary)
+      switch (enemy.actOptions[choiceZeroIndexed].onComplete) {
+        case "loop":
+          this.setActOptionCount(choiceZeroIndexed, 0);
+          break;
+        case "victory":
+          this.victory = true;
+          this.world.defeatedMonster();
+          break;
+        default:
+          throw new Error("You need to implement this option");
+      }
+    }
   }
 
 };
