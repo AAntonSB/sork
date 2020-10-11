@@ -23,3 +23,23 @@ class InputAction {
     return this.input;
   }
 }
+
+//#region  ACTIONS
+
+class Go extends Action {
+  constructor() {
+    super();
+    this.nextInChain;
+  }
+
+  setNextChain(nextChain) {
+    this.nextInChain = nextChain;
+  }
+  respondToInput(request, world) {
+    if (request[0] === "go" || request[0] === "head" || request[0] === "move") {
+      world.attemptToChangeRooms(request[1]);
+    } else {
+      this.nextInChain.respondToInput(request, world);
+    }
+  }
+}
