@@ -71,4 +71,14 @@ module.exports = class World {
     );
   }
 
+  getCurrentRoomValues() {
+    return this.game.rooms[this.currRoom.id];
+  }
+
+  getEnemy() {
+    const npc = this.currRoom.npcs;
+    if (!npc) return undefined;
+    return this.currRoom.npcs[0];
+  }
+
 };
