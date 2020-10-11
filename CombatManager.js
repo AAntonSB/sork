@@ -118,4 +118,11 @@ ${i + 1}. ${actOption.name}`;
     }
   }
 
+  //Initiates the time all the act options have been used
+  initActOptionCount(enemy) {
+    enemy.actOptions.forEach(() => {
+      this.actOptionCount.push(0);
+    });
+  }
+
 };
