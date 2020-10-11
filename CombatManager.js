@@ -67,6 +67,17 @@ module.exports = class CombatManager {
     console.clear();
   }
 
+
+  //Returns actoptions from the enemy and what button should be pressed to activate it
+  getEnemyActOptions(enemy) {
+    return enemy.actOptions
+      .map((actOption, i) => {
+        return `
+${i + 1}. ${actOption.name}`;
+      })
+      .join(" ");
+  }
+
   //Displays and acts upon player inputs
   chooseEnemyActOption(enemy, choice) {
     const choiceZeroIndexed = choice.value - 1;
