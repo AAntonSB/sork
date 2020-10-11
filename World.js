@@ -65,4 +65,10 @@ module.exports = class World {
 
   //#endregion
 
+  examineInventory() {
+    console.log(
+      "Inventory: " + this.player.displayInventory().join(", ") + "."
+    );
+  }
+
 };
