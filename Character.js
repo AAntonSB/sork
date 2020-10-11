@@ -49,4 +49,8 @@ module.exports = class Character {
   addEffect(effect) {
     this.effects.push(effect);
   }
+
+  setName(value) {
+    this.name = value;
+  }
 };

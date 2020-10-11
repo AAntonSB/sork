@@ -26,7 +26,7 @@ class Sork {
     try {
       console.clear();
 
-      this.player.name = await this.engine.prompt("My name is...");
+      this.player.setName(await this.engine.prompt("My name is..."));
       console.clear();
 
       //The gameloop
