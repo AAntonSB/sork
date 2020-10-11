@@ -6,7 +6,7 @@ module.exports = class World {
     this.descriptionLogged = false;
   }
 
-  //if description hasen't been printed prints it, and if there is a condition for a different description checks for it
+  //if description hasen't been printed ,prints it. If there is a condition for a different description checks for it
   printDescription() {
     if (this.descriptionLogged) return;
 
@@ -59,18 +59,22 @@ module.exports = class World {
   takeItem(value) {
     const item = this.findItem(value);
     if (!item) return console.log("that item can't be found in this room");
-    const trigger = item.triggers.find((e) => e.action === "take");
+    const trigger = item.triggers.find(
+      (trigger) => trigger.action === "take"
+    );
     if (trigger) {
       this.player.addToInventory(item);
       console.log(trigger.description);
       const effect = trigger.effect;
       if (effect) this.player.addEffect(effect);
+    } else {
+      console.log("You can't touch this!!")
     }
   }
 
   equipItem(value) {
     const item = this.findItem(value);
-    if (item.equipable === true) {
+    if (item.equipable) {
       this.player.setActive(item);
       console.log("You equiped " + item.name);
     } else {
@@ -80,11 +84,10 @@ module.exports = class World {
 
   //returns item with matching id
   findItem(input) {
-    return this.currRoom.items.filter((item) => {
-      if (input === item.id) {
-        return item;
-      }
-    })[0];
+    return this.currRoom.items.reduce((found, currentItem) => {
+      if (found) return found;
+      if (input === currentItem.id) return currentItem;
+    });
   }
 
   //#endregion
