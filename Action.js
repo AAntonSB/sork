@@ -112,4 +112,27 @@ class Inventory extends Action {
   }
 }
 
+class Help extends Action {
+  constructor() {
+    super();
+    this.nextInChain;
   }
+  setNextChain(nextChain) {
+    this.nextInChain = nextChain;
+  }
+  respondToInput(request, world) {
+    if (request[0] === "help") {
+      console.log(
+        //TODO find a way to do this programaticly to make scalability doable.
+        "Currently available commands are: go, examine, equip, take and inventory."
+      );
+    } else {
+      console.log(
+        "command currently not implemented, type help for current list of commands."
+      );
+      // this.nextInChain.respondToInput(request, world);
+    }
+  }
+}
+
+//#endregion
