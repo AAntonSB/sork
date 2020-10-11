@@ -33,6 +33,19 @@ module.exports = class Map {
               });
             })
           : [],
+        npcs: roomDetails.npcs
+          ? roomDetails.npcs.map((npc) => {
+              return new RoomModuleFactory("npc", {
+                id: npc.id,
+                name: npc.name,
+                details: npc.details,
+                actOptions: npc.actOptions,
+                stats: npc.stats,
+                friendly: npc.friendly,
+              });
+            })
+          : [],
+      });
     });
   };
 };
