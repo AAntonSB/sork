@@ -1,5 +1,15 @@
+const prompts = require("prompts");
+
 module.exports = class Engine {
-  update(world) {}
-  playerAction = (world, selection) => {};
-  result = (world) => {};
+  //Singelton class
+  constructor(game) {
+    if (Engine.exists) {
+      return Engine.instance;
+    }
+
+    Engine.instance = this;
+    Engine.exists = true;
+    return this;
+  }
+  }
 };
