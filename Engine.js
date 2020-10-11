@@ -17,9 +17,18 @@ module.exports = class Engine {
     return world.player.stats.hp > 0;
   };
 
+  //utility that stops the code for ms milliseconds
   sleep = (ms) => {
     return new Promise((resolve) => setTimeout(resolve, ms));
   };
 
+  //prompts npm
+  prompt = async (message) => {
+    return await prompts({
+      type: "text",
+      name: "value",
+      message: message,
+    });
+  };
   }
 };
