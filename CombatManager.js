@@ -8,4 +8,23 @@ module.exports = class CombatManager {
     this.engine = new Engine();
   }
 
+  //loops through the combat system until a combat condition is met
+  async combatLoop(player, enemy) {
+    if (typeof enemy !== "object") return;
+
+    this.initActOptionCount(enemy);
+
+    console.clear();
+    while (
+      player.stats.hp >= 0 &&
+      enemy.stats.hp >= 0 &&
+      this.victory === false
+    ) {
+      console.clear();
+    }
+  }
+      console.clear();
+    }
+  }
+
 };
