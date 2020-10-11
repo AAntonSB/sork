@@ -12,6 +12,7 @@ module.exports = class Engine {
     Engine.exists = true;
     return this;
   }
+
   //returns false once the player dies (Planed to be expanded on so the gamemaker can set the conditions)
   done = (world) => {
     return world.player.stats.hp > 0;
@@ -35,5 +36,7 @@ module.exports = class Engine {
     return this.game;
   }
 
+  unpackRooms() {
+    return this.game.map;
   }
 };
