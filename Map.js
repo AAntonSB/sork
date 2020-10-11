@@ -21,7 +21,18 @@ module.exports = class Map {
         }),
         description: roomDetails.description,
         items: roomDetails.items
-      });
+          ? roomDetails.items.map((item) => {
+              return new RoomModuleFactory("item", {
+                id: item.id,
+                name: item.name,
+                description: item.description,
+                triggers: item.triggers,
+                equipable: item.equipable,
+                attackDescription: item.attackDescription,
+                damage: item.damage,
+              });
+            })
+          : [],
     });
   };
 };
