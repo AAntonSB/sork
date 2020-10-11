@@ -12,6 +12,13 @@ module.exports = class Map {
       return new Room(roomDetails.id, {
         name: roomDetails.name,
         first: roomDetails.first,
+        exits: roomDetails.exits.map((exit) => {
+          return new RoomModuleFactory("exit", {
+            direction: exit.direction,
+            node: exit.node,
+            distance: exit.distance,
+          });
+        }),
         description: roomDetails.description,
         items: roomDetails.items
       });
