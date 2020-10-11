@@ -1,0 +1,145 @@
+{
+  "name": "DungeonCrawler",
+  "map": [
+    {
+      "id": "entrance",
+      "first": true,
+      "name": "Entrance",
+      "description": {
+        "default": "You enter a room, a huge door rests north of you, to the west there lies a smaler door, and to the east an even smaler door. Oh and also there is a skeleton in this room. I think that was all..."
+      },
+      "exits": [
+        { "direction": "north", "node": "bossRoom", "distance": 1 },
+        { "direction": "east", "node": "classyRoom", "distance": 1 },
+        { "direction": "west", "node": "darkRoom", "distance": 1 }
+      ],
+      "items": [
+        {
+          "id": "skeleton",
+          "name": "Skeleton",
+          "destination": "console",
+          "description": "When you search the Skeleton you see a sword",
+          "triggers": [
+            {
+              "action": "take",
+              "effect": {
+                "statusUpdate": "has light",
+                "target": "game"
+              }
+            }
+          ]
+        },
+        {
+          "id": "sword",
+          "name": "Iron broad sword",
+          "description": "an old and rusty sword",
+          "destination": "inventory",
+          "equipable": true,
+          "attackDescription": "You lunge the sword",
+          "damage": 8,
+          "triggers": [
+            {
+              "action": "take",
+              "description": "you lift the rusty sword from the ground, as you hold it the rust appears to fall of it and turns out to be a great silver sword. You put it into your inventory."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "bossRoom",
+      "name": "Boss room",
+      "exits": [{ "direction": "south", "node": "entrance", "distance": 1 }],
+      "description": {
+        "default": "You appear to have reached the end of the dungeon. A scary place for sure, but you overcame all of the odds and are now the best there was."
+      },
+      "npcs": [
+        {
+          "id": "finalboss",
+          "name": "Hulking Ogre",
+          "details": "A huge, green, muscular giant with a single eye in the middle of his forehead. It doesn't just look bad, it also smells like hell.",
+          "actOptions": [
+            {
+              "name": "Tickle",
+              "stages": [
+                "The giant dosen't react",
+                "The giant lets out a grin. HEH NOT TO BAD FOR SILLY HUMAN",
+                "The giant LOL'D",
+                "The giant laughs so mutch it rolls over and dies"
+              ],
+              "onComplete": "victory"
+            },
+            {
+              "name": "Insult",
+              "stages": [
+                "You tell the giant a very mean insult || grrrrrr",
+                "You tell the giant santa isn't real || You will pay for that!"
+              ],
+              "onComplete": "loop"
+            }
+          ],
+          "stats": {
+            "hp": 10,
+            "damage": 3
+          }
+        }
+      ]
+    },
+    {
+      "id": "classyRoom",
+      "name": "The classy room",
+      "exits": [{ "direction": "west", "node": "entrance", "distance": 1 }],
+      "description": {
+        "default": "Classy room, probably the classiest you've ever seen. Don't feel bad about it, ok...  there is a torch here."
+      },
+      "items": [
+        {
+          "id": "torch",
+          "name": "Torch",
+          "description": "You pick up the torch, damn its bright.",
+          "triggers": [
+            {
+              "action": "take",
+              "effect": "has light"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "darkRoom",
+      "name": "The dark room",
+      "exits": [{ "direction": "east", "node": "entrance", "distance": 1 }],
+      "description": {
+        "default": "It's dark in here, perhaps if you would have found a lightsource you could see the stuff in here.",
+        "conditionals": {
+          "has light": "This room is filled with random stuff, and now you feel stuffy. this was a bad idea."
+        }
+      }
+    }
+  ],
+  "conditions": {
+    "win-condition": [
+      {
+        "source": "finalBoss",
+        "condition": {
+          "type": "comparison",
+          "left": "hp",
+          "right": "0",
+          "symbol": "<="
+        }
+      }
+    ],
+    "lose-conditions": [
+      {
+        "source": "player",
+        "condition": {
+          "type": "comparison",
+          "left": "hp",
+          "right": "0",
+          "symbol": "<="
+        }
+      }
+    ]
+  }
+}
