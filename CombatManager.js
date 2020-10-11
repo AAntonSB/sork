@@ -125,4 +125,7 @@ ${i + 1}. ${actOption.name}`;
     });
   }
 
+  setActOptionCount(actOptionIndex, value) {
+    this.actOptionCount[actOptionIndex] = value;
+  }
 };
