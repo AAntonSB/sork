@@ -17,4 +17,13 @@ class Item {
   }
 };
 
-
+class Npc {
+  constructor(props) {
+    this.id = props.id;
+    this.name = props.name;
+    this.details = props.details;
+    this.actOptions = props.actOptions || [];
+    this.stats = props.stats || {};
+    this.friendly = props.friendly || false;
+  }
+};
