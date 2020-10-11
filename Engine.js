@@ -30,5 +30,10 @@ module.exports = class Engine {
       message: message,
     });
   };
+
+  getGame() {
+    return this.game;
+  }
+
   }
 };
