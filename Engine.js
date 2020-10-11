@@ -16,5 +16,10 @@ module.exports = class Engine {
   done = (world) => {
     return world.player.stats.hp > 0;
   };
+
+  sleep = (ms) => {
+    return new Promise((resolve) => setTimeout(resolve, ms));
+  };
+
   }
 };
