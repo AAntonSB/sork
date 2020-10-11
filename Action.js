@@ -77,3 +77,20 @@ class Equip extends Action {
     }
   }
 }
+
+class Take extends Action {
+  constructor() {
+    super();
+    this.nextInChain;
+  }
+  setNextChain(nextChain) {
+    this.nextInChain = nextChain;
+  }
+  respondToInput(request, world) {
+    if (request[0] === "take") {
+      world.takeItem(request[1]);
+    } else {
+      this.nextInChain.respondToInput(request, world);
+    }
+  }
+}
