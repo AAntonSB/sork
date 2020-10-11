@@ -1,14 +1,38 @@
 module.exports = class World {
   constructor(map, player) {
     this.map = map;
-    this.items = items;
     this.player = player;
     this.currRoom = map.rooms[0];
     this.descriptionLogged = false;
   }
 
-  description = () => {};
-  options = () => {};
+  //if description hasen't been printed prints it, and if there is a condition for a different description checks for it
+  printDescription() {
+    if (this.descriptionLogged) return;
+
+    this.descriptionLogged = true;
+
+    if (this.currRoom.description.conditionals) {
+      if (
+        this.findMatchingArrayElement(
+          Object.keys(this.currRoom.description.conditionals),
+          this.player.effects
+        )
+      ) {
+        return console.log(
+          this.currRoom.description.conditionals[this.player.effects[0]]
+        );
+      }
+    }
+    return console.log(this.currRoom.description.default);
+  }
+
+  //returns true upon an array having a matching value against another
+  findMatchingArrayElement(arr1, arr2) {
+    return arr1.some(function (v) {
+      return arr2.indexOf(v) >= 0;
+    });
+  }
 
   attemptToChangeRooms(direction) {
     const e = this.currRoom.exits.find((exit) => exit.direction === direction);
