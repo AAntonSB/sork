@@ -17,17 +17,8 @@
         {
           "id": "skeleton",
           "name": "Skeleton",
-          "destination": "console",
-          "description": "When you search the Skeleton you see a sword",
-          "triggers": [
-            {
-              "action": "take",
-              "effect": {
-                "statusUpdate": "has light",
-                "target": "game"
-              }
-            }
-          ]
+          "static": true,
+          "description": "When you search the Skeleton you see a sword"
         },
         {
           "id": "sword",
