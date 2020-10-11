@@ -81,4 +81,11 @@ module.exports = class World {
     return this.currRoom.npcs[0];
   }
 
+  defeatedMonster() {
+    return this.map.rooms.forEach((e) => {
+      if (e.id === this.currRoom.id) {
+        e.npcs[0].defeated = true;
+      }
+    });
+  }
 };
