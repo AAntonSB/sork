@@ -6,38 +6,53 @@ const CombatManager = require("./CombatManager.js");
 const { InputAction, ActionFacade } = require("./Action.js");
 const game = require("./Game.json");
 
-async function start() {
-  console.clear();
+class Sork {
+  constructor() {
+    this.engine = new Engine(game);
 
-  //Initiate all the classes
-  const engine = new Engine(game);
-  const player = new Character(await engine.prompt("My name is..."), {
-    hp: 20,
-  });
-  const map = new Map(engine.unpackRooms());
-  map.createRooms();
-  const world = new World(map, player);
-  const combatManager = new CombatManager(world);
-  const actionFacade = new ActionFacade();
+    this.player = new Character({ hp: 20 });
 
-  actionFacade.initActionChain();
+    this.map = new Map(this.engine.unpackRooms());
+    this.map.createRooms();
 
-  console.clear();
+    this.world = new World(this.map, this.player);
+    this.combatManager = new CombatManager(this.world);
+    this.actionFacade = new ActionFacade();
 
-  //The gameloop
-  while (engine.done(world)) {
-    world.printDescription();
+    this.actionFacade.initActionChain();
+  }
 
-    const inputAction = new InputAction(await engine.prompt(""));
-    actionFacade.handleAction(inputAction.getInput().value.split(" "), world);
+  async start() {
+    try {
+      console.clear();
 
-    const enemy = world.getEnemy();
-    if (enemy) {
-      if (!enemy.defeated) await combatManager.combatLoop(world.player, enemy);
+      this.player.name = await this.engine.prompt("My name is...");
+      console.clear();
+
+      //The gameloop
+      while (this.engine.done(this.world)) {
+        this.world.printDescription();
+
+        const inputAction = new InputAction(await this.engine.prompt(""));
+        this.actionFacade.handleAction(
+          inputAction.getInput().value.split(" "),
+          this.world
+        );
+
+        const enemy = this.world.getEnemy();
+        if (enemy) {
+          if (!enemy.defeated)
+            await combatManager.combatLoop(this.world.player, enemy);
+        }
+      }
+      console.clear();
+      console.log("You died");
+    } catch (err) {
+      console.error(err);
     }
   }
-  console.clear();
-  console.log("You died");
 }
 
-start();
+const sork = new Sork();
+
+sork.start();

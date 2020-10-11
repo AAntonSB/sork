@@ -1,6 +1,6 @@
 module.exports = class Character {
-  constructor(name, { hp }) {
-    this.name = name;
+  constructor({ hp }) {
+    this.name = "";
     this.stats = { hp };
     this.inventory = [];
     this.effects = [];
