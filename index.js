@@ -1,34 +1,43 @@
 const Character = require("./Character.js");
-const Commands = require("./Commands.js");
-// function start() {
-//   const map = new Map("mapfile.txt");
+const World = require("./World.js");
+const Engine = require("./Engine.js");
+const Map = require("./Map.js");
+const CombatManager = require("./CombatManager.js");
+const { InputAction, ActionFacade } = require("./Action.js");
+const game = require("./Game.json");
 
-//   const name = read_player_name_from_command_line();
-//   const player = new player(name); // namn, hp, saker
+async function start() {
+  console.clear();
 
-//   const items = read_items_from_item_file("itemfile.txt");
+  //Initiate all the classes
+  const engine = new Engine(game);
+  const player = new Character(await engine.prompt("My name is..."), {
+    hp: 20,
+  });
+  const map = new Map(engine.unpackRooms());
+  map.createRooms();
+  const world = new World(map, player);
+  const combatManager = new CombatManager(world);
+  const actionFacade = new ActionFacade();
 
-//   const world = new world(map, items, player, enemies);
+  actionFacade.initActionChain();
 
-//   const engine = Engine.instance();
+  console.clear();
 
-//   while (!engine.done(world)) {
-//     print(world.description());
-//     print(world.options());
+  //The gameloop
+  while (engine.done(world)) {
+    world.printDescription();
 
-//     const selection = read_selection_from_command_line(); // npm i prompt
+    const inputAction = new InputAction(await engine.prompt(""));
+    actionFacade.handleAction(inputAction.getInput().value.split(" "), world);
 
-//     engine.playerAction(world, selection);
-//     engine.update(world);
-//   }
-
-//   print_result(engine.result(world));
-// }
-
-function start() {
-  const command = new Commands();
-  const name = command.prompt("What is your name?");
-  const player = new Character(name);
+    const enemy = world.getEnemy();
+    if (enemy) {
+      if (!enemy.defeated) await combatManager.combatLoop(world.player, enemy);
+    }
+  }
+  console.clear();
+  console.log("You died");
 }
 
 start();
