@@ -8,41 +8,22 @@ module.exports = class Map {
 
   //This function creates all the <Room>s and all the modules it contains: <Exit>, <Item>, <Npc>
   createRooms = () => {
-    this.rooms = this.rooms.map((roomDetails) => {
-      return new Room(roomDetails.id, {
-        name: roomDetails.name,
-        first: roomDetails.first,
-        exits: roomDetails.exits.map((exit) => {
-          return new RoomModuleFactory("exit", {
-            direction: exit.direction,
-            node: exit.node,
-            distance: exit.distance,
-          });
+    this.rooms = this.rooms.map((room) => {
+      return new Room(room.id, {
+        name: room.name,
+        first: room.first,
+        exits: room.exits.map((exit) => {
+          return RoomModuleFactory.createExit(exit);
         }),
-        description: roomDetails.description,
-        items: roomDetails.items
-          ? roomDetails.items.map((item) => {
-              return new RoomModuleFactory("item", {
-                id: item.id,
-                name: item.name,
-                description: item.description,
-                triggers: item.triggers,
-                equipable: item.equipable,
-                attackDescription: item.attackDescription,
-                damage: item.damage,
-              });
+        description: room.description,
+        items: room.items
+          ? room.items.map((item) => {
+              return RoomModuleFactory.createItem(item);
             })
           : [],
-        npcs: roomDetails.npcs
-          ? roomDetails.npcs.map((npc) => {
-              return new RoomModuleFactory("npc", {
-                id: npc.id,
-                name: npc.name,
-                details: npc.details,
-                actOptions: npc.actOptions,
-                stats: npc.stats,
-                friendly: npc.friendly,
-              });
+        npcs: room.npcs
+          ? room.npcs.map((npc) => {
+              return RoomModuleFactory.createNpc(npc);
             })
           : [],
       });
