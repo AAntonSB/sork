@@ -13,3 +13,13 @@ class Action {
     throw new Error("respondToInput() is not implemented");
   }
 }
+
+class InputAction {
+  constructor(input) {
+    this.input = input;
+  }
+
+  getInput() {
+    return this.input;
+  }
+}
