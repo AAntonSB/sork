@@ -31,7 +31,7 @@
         },
         {
           "id": "sword",
-          "name": "Iron broad sword",
+          "name": "Great silver sword",
           "description": "an old and rusty sword",
           "destination": "inventory",
           "equipable": true,
@@ -96,11 +96,12 @@
         {
           "id": "torch",
           "name": "Torch",
-          "description": "You pick up the torch, damn its bright.",
+          "description": "Is that a carbattery attached to the torch?",
           "triggers": [
             {
               "action": "take",
-              "effect": "has light"
+              "effect": "has light",
+              "description": "You pick up the torch, damn its bright."
             }
           ]
         }
