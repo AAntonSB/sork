@@ -21,6 +21,8 @@ module.exports = class CombatManager {
       this.victory === false
     ) {
       await this.playerActions(player, enemy);
+      this.enemyReaction(enemy);
+      await this.engine.sleep(3000);
       console.clear();
     }
   }
@@ -67,6 +69,17 @@ module.exports = class CombatManager {
     console.clear();
   }
 
+  enemyReaction(enemy) {
+    //simplifictaion of response
+    //Planned to be able to respond differently to different act options
+    console.log(
+      "The " +
+        enemy.name +
+        " throws a fearsome blow against you, you take " +
+        enemy.stats.damage +
+        " damage"
+    );
+  }
 
   //Returns actoptions from the enemy and what button should be pressed to activate it
   getEnemyActOptions(enemy) {
