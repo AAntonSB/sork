@@ -43,3 +43,20 @@ class Go extends Action {
     }
   }
 }
+
+class Examine extends Action {
+  constructor() {
+    super();
+    this.nextInChain;
+  }
+  setNextChain(nextChain) {
+    this.nextInChain = nextChain;
+  }
+  respondToInput(request, world) {
+    if (request[0] === "examine" || request[0] === "inspect") {
+      world.examineItem(request[1]);
+    } else {
+      this.nextInChain.respondToInput(request, world);
+    }
+  }
+}
