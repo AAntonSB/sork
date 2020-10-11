@@ -24,4 +24,36 @@ module.exports = class World {
     }
   }
 
+  //#region ITEMHANDLING
+
+  examineItem(value) {
+    const item = this.findItem(value);
+    if (!item) return;
+    console.log(item.description);
+  }
+
+  }
+  }
+
+  equipItem(value) {
+    const item = this.findItem(value);
+    if (item.equipable === true) {
+      this.player.setActive(item);
+      console.log("You equiped " + item.name);
+    } else {
+      console.log("item is not equipable");
+    }
+  }
+
+  //returns item with matching id
+  findItem(input) {
+    return this.currRoom.items.filter((item) => {
+      if (input === item.id) {
+        return item;
+      }
+    })[0];
+  }
+
+  //#endregion
+
 };
