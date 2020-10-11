@@ -60,3 +60,20 @@ class Examine extends Action {
     }
   }
 }
+
+class Equip extends Action {
+  constructor() {
+    super();
+    this.nextInChain;
+  }
+  setNextChain(nextChain) {
+    this.nextInChain = nextChain;
+  }
+  respondToInput(request, world) {
+    if (request[0] === "equip") {
+      world.equipItem(request[1]);
+    } else {
+      this.nextInChain.respondToInput(request, world);
+    }
+  }
+}
