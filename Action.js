@@ -136,3 +136,29 @@ class Help extends Action {
 }
 
 //#endregion
+
+//Facade pattern
+class ActionFacade {
+  constructor() {
+    this.go = new Go();
+    this.examine = new Examine();
+    this.equip = new Equip();
+    this.take = new Take();
+    this.inventory = new Inventory();
+    this.help = new Help();
+  }
+
+  handleAction(request, world) {
+    this.go.respondToInput(request, world);
+  }
+
+  initActionChain() {
+    this.go.setNextChain(this.examine);
+    this.examine.setNextChain(this.equip);
+    this.equip.setNextChain(this.take);
+    this.take.setNextChain(this.inventory);
+    this.inventory.setNextChain(this.help);
+  }
+}
+
+module.exports = { InputAction, ActionFacade };
