@@ -7,6 +7,7 @@ module.exports = class Engine {
       return Engine.instance;
     }
     this.game = game;
+    this.conditions = [];
 
     Engine.instance = this;
     Engine.exists = true;

@@ -59,16 +59,14 @@ module.exports = class World {
   takeItem(value) {
     const item = this.findItem(value);
     if (!item) return console.log("that item can't be found in this room");
-    const trigger = item.triggers.find(
-      (trigger) => trigger.action === "take"
-    );
+    const trigger = item.triggers.find((trigger) => trigger.action === "take");
     if (trigger) {
       this.player.addToInventory(item);
       console.log(trigger.description);
       const effect = trigger.effect;
       if (effect) this.player.addEffect(effect);
     } else {
-      console.log("You can't touch this!!")
+      console.log("You can't touch this!!");
     }
   }
 
@@ -84,10 +82,9 @@ module.exports = class World {
 
   //returns item with matching id
   findItem(input) {
-    return this.currRoom.items.reduce((found, currentItem) => {
-      if (found) return found;
-      if (input === currentItem.id) return currentItem;
-    });
+    return this.currRoom.items.filter((item) => {
+      if (item.id == input) return item;
+    })[0];
   }
 
   //#endregion
